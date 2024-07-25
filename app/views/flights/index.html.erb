@@ -1,0 +1,12 @@
+<h1>This is index for flights</h1>
+<%= form_with url: root_path, method: :get do |f| %>
+	<%= f.label :departure_airport %>
+	<%= f.select :departure_airport, @departure_airports.map { |n| n } %>
+ 	<%= f.label :arrival_airport %>
+ 	<%= f.select :departure_airport, @arrival_airports.map { |n| n } %>
+	<%= f.label :date %>
+	<%= f.select :date, display_formatted_dates(@dates).map { |n| n } %>
+	<%= f.label :passenger_number %>
+	<%= f.select :passenger_number, [1,2,3,4].map { |n| n } %>
+	<%= f.submit %>
+<% end %>

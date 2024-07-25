@@ -8,10 +8,11 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Airport.delete_all
-Flight.delete_all
+Flight.destroy_all
+Airport.destroy_all
 
-airport_codes = ["LAX", "JFK", "ORD", "ATL", "DFW", "DEN", "SFO", "SEA", "MIA", "LAS"]
+
+airport_codes = ["LAX", "JFK", "ORD", "ATL", "DFW", "DEN", "SFO", "SEA", "MIA", "LAS", "IN", "OUT"]
 airports = Array.new
 airport_codes.each do |airport_code|
 	airports << Airport.create!(code: airport_code)
@@ -28,6 +29,12 @@ Flight.create!(
     { departure_airport: airports[6], arrival_airport: airports[7], start: Time.now + 7.days, flight_duration: 210 },
     { departure_airport: airports[7], arrival_airport: airports[8], start: Time.now + 8.days, flight_duration: 180 },
     { departure_airport: airports[8], arrival_airport: airports[9], start: Time.now + 9.days, flight_duration: 300 },
-    { departure_airport: airports[9], arrival_airport: airports[0], start: Time.now + 10.days, flight_duration: 360 }
+    { departure_airport: airports[9], arrival_airport: airports[0], start: Time.now + 10.days, flight_duration: 360 },
+    { departure_airport: airports[10], arrival_airport: airports[11], start: Time.now + 10.days, flight_duration: 360 }
   ]
 )
+  Flight Pluck (0.7ms)  SELECT `airports`.`code` FROM `flights` INNER JOIN `airports` ON `airports`.`id` = `flights`.`departure_airport_id`                                                                                                                                 
+=> ["LAX", "JFK", "ORD", "ATL", "DFW", "DEN", "SFO", "SEA", "MIA", "LAS"]                                                                                                                                                                                                   
+flight-booker(dev)> Flight.joins(:arrival_airport).pluck('airports.code')                                                                                                                                                                                                   
+  Flight Pluck (0.9ms)  SELECT `airports`.`code` FROM `flights` INNER JOIN `airports` ON `airports`.`id` = `flights`.`arrival_airport_id`                                                                                                                                   
+=> ["LAX", "JFK", "ORD", "ATL", "DFW", "DEN", "SFO", "SEA", "MIA", "LAS"]     

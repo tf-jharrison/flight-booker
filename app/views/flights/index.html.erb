@@ -10,3 +10,31 @@
 	<%= f.select :passenger_number, [1,2,3,4].map { |n| n } %>
 	<%= f.submit %>
 <% end %>
+
+<h1>----------------------------------</h1>
+
+<% if @available_flights %>
+	<%= form_with method: :get do |form| %>
+		<table>
+			<tr>
+				<th>Departure Airport</th>
+				<th>Arrival Airport</th>
+				<th>Departure Time</th>
+				<th>Duration</th>
+				<th></th>		
+			</tr>
+
+			<% @available_flights.each do |f| %>
+				<tr>
+					<td><%= f.departure_airport.code %></td>
+					<td><%= f.arrival_airport.code %></td>
+					<td><%= (f.start).strftime("%H:%M:%S") %></td>
+					<td><%= time_conversion(f.flight_duration) %></td>
+					<td><%= form.radio_button :flight_selection, f.id %>
+				</tr>
+			<% end %>
+		</table>
+		<%= form.hidden_field :number_of_passengers, value: @number_of_passengers %>
+		<%= form.submit %>
+	<% end %>
+<% end %> 

@@ -3,7 +3,7 @@
 	<%= f.label :departure_airport %>
 	<%= f.select :departure_airport, @departure_airports.map { |n| n } %>
  	<%= f.label :arrival_airport %>
- 	<%= f.select :departure_airport, @arrival_airports.map { |n| n } %>
+ 	<%= f.select :arrival_airport, @arrival_airports.map { |n| n } %>
 	<%= f.label :date %>
 	<%= f.select :date, display_formatted_dates(@dates).map { |n| n } %>
 	<%= f.label :passenger_number %>

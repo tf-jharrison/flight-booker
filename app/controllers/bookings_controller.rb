@@ -9,8 +9,14 @@ class BookingsController < ApplicationController
 	end
 
 	def create
-		@booking = Booking.create(booking_params)
-		redirect_to booking_path(@booking.id)
+		@booking = Booking.new(booking_params)
+
+		if @booking.save
+			redirect_to booking_path(@booking.id)
+		else
+			flash[:error] = @booking.errors.full_messages
+			redirect_to bookings_path
+		end
 	end
 
 	def show

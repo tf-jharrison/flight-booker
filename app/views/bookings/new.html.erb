@@ -1,29 +1,52 @@
-<h1>New booking</h1>
-<%= form_for @booking do |f| %>
-	<%= f.hidden_field :flight_id, value: @flight.id %>
-		<table>
-			<tr>
-				<th>Departure Airport</th>
-				<th>Arrival Airport</th>
-				<th>Departure Date</th>
-				<th>Departure Time</th>
-				<th>Flight Duration</th>
-			</tr>
-			<tr>
-				<td><%= @flight.departure_airport.code %></td>
-				<td><%= @flight.arrival_airport.code %></td>
-				<td><%= @flight.start %></td>
-				<td><%= @flight.start %></td>
-				<td><%= @flight.flight_duration %></td>
-			</tr>
-		</table>
-	<%= @number_of_passengers.times do %>
-		<%= f.fields_for :passengers do |passenger| %>
-			<%= passenger.label :name %>
-			<%= passenger.text_field :name %>
-			<%= passenger.label :email %>
-			<%= passenger.text_field :email %>
+<div class="container my-5">
+	<div class="row d-flex align-items-end border border-black p-3">
+		<%= form_for @booking do |f| %>
+			<h2>Flight Details</h2>
+			<%= f.hidden_field :flight_id, value: @flight.id %>
+			<table class="table my-4">
+				<thead>
+					<tr>
+						<th scope="col" class="text-center">Departure Airport</th>
+						<th scope="col" class="text-center">Arrival Airport</th>
+						<th scope="col" class="text-center">Departure Date</th>
+						<th scope="col" class="text-center">Departure Time</th>
+						<th scope="col" class="text-center">Flight Duration</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center"><%= @flight.departure_airport.code %></td>
+						<td class="text-center"><%= @flight.arrival_airport.code %></td>
+						<td class="text-center"><%= (@flight.start).strftime("%d/%m/%y") %></td>
+						<td class="text-center"><%= (@flight.start).strftime("%H:%m") %></td>
+						<td class="text-center"><%= time_conversion(@flight.flight_duration) %></td>
+					</tr>
+				</tbody>
+			</table>
+			<h2>Passenger Details</h2>
+			<% if flash[:error] %>
+		  		<div class="alert alert-danger alert-dismissible fade show p-0" role="alert">
+					<% flash[:error].each do |error| %>
+			 		<p><%= error %></p>
+			 		<% end %>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			<% end %>	
+			<% @number_of_passengers.times do |i| %>
+				<%= f.fields_for :passengers do |passenger| %>
+					<div class="row my-3">
+						<div class="col-3 d-flex flex-column">
+							<%= passenger.label :name, "Passenger #{i+1} Name" %>
+							<%= passenger.text_field :name %>
+						</div>
+						<div class="col-3 d-flex flex-column">
+							<%= passenger.label :email, "Passenger #{i+1} Email" %>
+							<%= passenger.email_field :email %>
+						</div>
+					</div>
+				<% end %>
+			<% end %>
+			<%= f.submit %>
 		<% end %>
-	<% end %>
-	<%= f.submit %>
-<% end %>
+	</div>
+</div>

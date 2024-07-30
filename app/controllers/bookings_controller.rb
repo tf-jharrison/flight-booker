@@ -14,7 +14,7 @@ class BookingsController < ApplicationController
 	end
 
 	def show
-
+		@booking = Booking.find_by(id: params[:id])
 	end
 
 	private

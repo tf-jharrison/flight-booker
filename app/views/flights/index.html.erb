@@ -14,7 +14,7 @@
 <h1>----------------------------------</h1>
 
 <% if @available_flights %>
-	<%= form_with method: :get do |form| %>
+	<%= form_with url: new_booking_path, method: :get do |form| %>
 		<table>
 			<tr>
 				<th>Departure Airport</th>

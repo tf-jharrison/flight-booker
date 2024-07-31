@@ -1,28 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Flight Booker App made using rails.  
+Users have the ability to search for a flight and book a flight including adding passenger details.
 
-Things you may want to cover:
+## Installation Instructions ##
+1) Clone this repo
+2) Run the following commands in the terminal
+```
+  cd flight-booker
+  bundle install
+  rails db:migrate
+  rails db:seed
+  rails server
+```
 
-Flight booker app
 
+## Details ##
 * Ruby version: 3.3.4
 
 * Rails version: 7.2.0.beta3
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

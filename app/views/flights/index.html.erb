@@ -1,40 +1,60 @@
-<h1>This is index for flights</h1>
-<%= form_with url: root_path, method: :get do |f| %>
-	<%= f.label :departure_airport %>
-	<%= f.select :departure_airport, @departure_airports.map { |n| n } %>
- 	<%= f.label :arrival_airport %>
- 	<%= f.select :arrival_airport, @arrival_airports.map { |n| n } %>
-	<%= f.label :date %>
-	<%= f.select :date, display_formatted_dates(@dates).map { |n| n } %>
-	<%= f.label :passenger_number %>
-	<%= f.select :passenger_number, [1,2,3,4].map { |n| n } %>
-	<%= f.submit %>
-<% end %>
-
-<h1>----------------------------------</h1>
-
-<% if @available_flights %>
-	<%= form_with url: new_booking_path, method: :get do |form| %>
-		<table>
-			<tr>
-				<th>Departure Airport</th>
-				<th>Arrival Airport</th>
-				<th>Departure Time</th>
-				<th>Duration</th>
-				<th></th>		
-			</tr>
-
-			<% @available_flights.each do |f| %>
-				<tr>
-					<td><%= f.departure_airport.code %></td>
-					<td><%= f.arrival_airport.code %></td>
-					<td><%= (f.start).strftime("%H:%M:%S") %></td>
-					<td><%= time_conversion(f.flight_duration) %></td>
-					<td><%= form.radio_button :flight_selection, f.id %>
-				</tr>
-			<% end %>
-		</table>
-		<%= form.hidden_field :number_of_passengers, value: @number_of_passengers %>
-		<%= form.submit %>
+<form class="container my-5">
+	<div class="row d-flex align-items-end border border-black p-3">
+	<h2>Find Your Flight</h2>	
+	<%= form_with url: root_path, method: :get do |f| %>
+		<div class="col-3 d-flex flex-column">
+			<%= f.label :departure_airport, "Departure Airport", class: "form-label" %>
+			<%= f.select :departure_airport, @departure_airports.map { |n| n }, class: "form-select", selected: params[:departure_airport] %>
+		</div>
+		<div class="col-3 d-flex flex-column">
+		 	<%= f.label :arrival_airport, "Arrival Airport", class: "form-label" %>
+		 	<%= f.select :arrival_airport, @arrival_airports.map { |n| n }, selected: params[:arrival_airport] %>
+	 	</div>
+		<div class="col-2 d-flex flex-column">
+			<%= f.label :date, class: "form-label" %>
+			<%= f.select :date, display_formatted_dates(@dates).map { |n| n }, selected: params[:date] %>
+		</div>
+		<div class="col-2 d-flex flex-column">
+			<%= f.label :passenger_number, "Number of Passengers", class:"form-label" %>
+			<%= f.select :passenger_number, [1,2,3,4].map { |n| n }, selected: params[:passenger_number] %>
+		</div>
+		<%= f.submit "SEARCH", class: "col-2 py-0" %>
 	<% end %>
-<% end %> 
+	</div>
+</form>
+
+<div class="container my-5">
+	<div class="row d-flex justify-content-center border border-black p-3">
+		<h2>Results:</h2>
+		<%= render "shared/error_messages" %>	
+
+		<% if @available_flights %>
+			<%= form_with url: new_booking_path, method: :get do |form| %>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col" class="text-center">Departure Airport</th>
+							<th scope="col" class="text-center">Arrival Airport</th>
+							<th scope="col" class="text-center">Departure Time</th>
+							<th scope="col" class="text-center">Duration</th>
+							<th scope="col" class="text-center">Select</th>		
+						</tr>
+					<thead>
+					<tbody>
+						<% @available_flights.each do |f| %>
+							<tr>
+								<td class="text-center"><%= f.departure_airport.code %></td>
+								<td class="text-center"><%= f.arrival_airport.code %></td>
+								<td class="text-center"><%= (f.start).strftime("%H:%M:%S") %></td>
+								<td class="text-center"><%= time_conversion(f.flight_duration) %></td>
+								<td class="text-center"><%= form.radio_button :flight_selection, f.id, checked: true %>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+				<%= form.hidden_field :number_of_passengers, value: @number_of_passengers %>
+	<div class="d-flex justify-content-end">
+				<%= form.submit "BOOK FLIGHT", class: "text-end" %>
+				</div>
+			<% end %>
+		<% end %>

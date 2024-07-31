@@ -1,32 +1,47 @@
-<h1>THIS IS SHOW</h1>
-<h2>Your booking</h2>
-<h3>Flight Details</h3>
-<table>
-	<tr>
-		<th>Departure Airport</th>
-		<th>Arrival Airport</th>
-		<th>Departure Date</th>
-		<th>Departure Time</th>
-		<th>Flight Duration</th>
-	</tr>
-	<tr>
-		<td><%= @booking.flight.departure_airport.code %></td>
-		<td><%= @booking.flight.arrival_airport.code %></td>
-		<td><%= @booking.flight.start %></td>
-		<td><%= @booking.flight.start %></td>
-		<td><%= @booking.flight.flight_duration %></td>
-	</tr>
-</table>
-<h3>Passenger Details</h3>
-<table>
-	<tr>
-		<th>Name</th>
-		<th>Email</th>
-	</tr>
-	<% @booking.passengers.each do |passenger| %>
-		<tr>
-			<td> <%= passenger.name %> </td>
-			<td> <%= passenger.email %> </td>
-		<tr>
-	<% end %>
-</table>
+<div class="container my-5 d-flex flex-column align-items-end">
+	<div class="row d-flex align-items-end border border-black p-3 my-4">
+		<h1>Your Booking</h1>
+		<hr>
+		<h3>Flight Details</h3>
+		<table class="table my-4">
+			<thead>
+				<tr>
+					<th scope="col" class="text-center">Departure Airport</th>
+					<th scope="col" class="text-center">Arrival Airport</th>
+					<th scope="col" class="text-center">Departure Date</th>
+					<th scope="col" class="text-center">Departure Time</th>
+					<th scope="col" class="text-center">Flight Duration</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text-center"><%= @booking.flight.departure_airport.code %></td>
+					<td class="text-center"><%= @booking.flight.arrival_airport.code %></td>
+					<td class="text-center"><%= (@booking.flight.start).strftime("%d/%m/%y") %></td>
+					<td class="text-center"><%= (@booking.flight.start).strftime("%H:%m") %></td>
+					<td class="text-center"><%= time_conversion(@booking.flight.flight_duration) %></td>
+				</tr>
+			</tbody>
+		</table>
+		<h3>Passenger Details</h3>
+		<table class="table my-4">
+			<thead>
+				<tr>
+					<th scope="col" class="text-center"></th>
+					<th scope="col" class="text-center">Name</th>
+					<th scope="col" class="text-center">Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @booking.passengers.each_with_index do |passenger, i| %>
+					<tr>
+						<th class="text-center"><%= "Passenger #{i+1}" %></th>
+						<td class="text-center"> <%= passenger.name %> </td>
+						<td class="text-center"> <%= passenger.email %> </td>
+					<tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+	<%= button_to "Book Another Flight", root_path, method: :get %>
+</div>

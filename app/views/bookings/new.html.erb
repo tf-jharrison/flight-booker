@@ -24,15 +24,12 @@
 				</tbody>
 			</table>
 			<h2>Passenger Details</h2>
-			<% if flash[:error] %>
-		  		<div class="alert alert-danger alert-dismissible fade show p-0" role="alert">
-					<% flash[:error].each do |error| %>
-			 		<p><%= error %></p>
-			 		<% end %>
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				</div>
-			<% end %>	
+			<%= render "shared/error_messages" %>
+
+			<%# means the passenger number can be dislayed properly %>
 			<% @number_of_passengers.times do |i| %>
+
+				<%# nested field information %>
 				<%= f.fields_for :passengers do |passenger| %>
 					<div class="row my-3">
 						<div class="col-3 d-flex flex-column">
@@ -45,6 +42,7 @@
 						</div>
 					</div>
 				<% end %>
+				
 			<% end %>
 			<%= f.submit %>
 		<% end %>

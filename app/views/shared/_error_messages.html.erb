@@ -1,0 +1,12 @@
+<% if flash[:error] %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <% flash[:error].each do |error| %>
+      <%= error %>
+      <br>
+    <% end %> 
+    <%flash.clear %> 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+  </div>
+<% end %>
+

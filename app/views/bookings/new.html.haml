@@ -1,0 +1,36 @@
+%div{:class => "container my-5"}
+	%div{:class => "row d-flex align-items-end border border-black p-3"}
+		= form_for @booking do |f|
+			%h2 Flight Details
+			= f.hidden_field :flight_id, value: @flight.id
+			%table{:class => "table my-4"}
+				%thead
+					%tr
+						%th{:class => "text-center"} Departure Airport
+						%th{:class => "text-center"} Arrival Airport
+						%th{:class => "text-center"} Departure Date
+						%th{:class => "text-center"} Departure Time
+						%th{:class => "text-center"} Flight Duration
+				%tbody
+					%tr
+						%td{:class => "text-center"}= @flight.departure_airport.code
+						%td{:class => "text-center"}= @flight.arrival_airport.code
+						%td{:class => "text-center"}= (@flight.start).strftime("%d/%m/%y")
+						%td{:class => "text-center"}= (@flight.start).strftime("%H:%m")
+						%td{:class => "text-center"}= time_conversion(@flight.flight_duration)
+			%h2 Passenger Details
+			= render "shared/error_messages"
+
+			- # means the passenger number can be dislayed properly
+			- @number_of_passengers.times do |i|
+
+				- # nested field information
+				= f.fields_for :passengers do |passenger|
+					%div{:class => "row my-3"}
+						%div{:class => "col-3 d-flex flex-column"}
+							= passenger.label :name, "Passenger #{i+1} Name"
+							= passenger.text_field :name
+						%div{:class => "col-3 d-flex flex-column"}
+							= passenger.label :email, "Passenger #{i+1} Email"
+							= passenger.email_field :email
+			= f.submit

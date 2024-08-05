@@ -1,0 +1,35 @@
+%div{:class => "container my-5 d-flex flex-column align-items-end"}
+	%div{:class => "row d-flex align-items-end border border-black p-3 my-4"}
+		%h1 Your Booking
+		%hr
+		%h3 Flight Details
+		%table{:class => "table my-4"}
+			%thead
+				%tr
+					%th{:class => "text-center"} Departure Airport
+					%th{:class => "text-center"} Arrival Airport
+					%th{:class => "text-center"} Departure Date
+					%th{:class => "text-center"} Departure Time
+					%th{:class => "text-center"} Flight Duration
+			%tbody
+				%tr
+					%td{:class => "text-center"}= @booking.flight.departure_airport.code
+					%td{:class => "text-center"}= @booking.flight.arrival_airport.code
+					%td{:class => "text-center"}= (@booking.flight.start).strftime("%d/%m/%y")
+					%td{:class => "text-center"}= (@booking.flight.start).strftime("%H:%m")
+					%td{:class => "text-center"}= time_conversion(@booking.flight.flight_duration)
+		%h3 Passenger Details
+		%table{:class => "table my-4"}
+			%thead
+				%tr
+					%th{:class => "text-center"} 
+					%th{:class => "text-center"} Name
+					%th{:class => "text-center"} Email
+			%tbody
+				- @booking.passengers.each_with_index do |passenger, i|
+					%tr
+						%th{:class => "text-center"}=  "Passenger #{i+1}"
+						%td{:class => "text-center"}=  passenger.name
+						%td{:class => "text-center"}=  passenger.email
+
+	= button_to "Book Another Flight", root_path, method: :get

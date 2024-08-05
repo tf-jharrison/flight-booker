@@ -1,0 +1,18 @@
+%div{:class => "d-flex flex-column h-100 justify-content-center align-items-center"}
+  %h3 Sign Up
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = render "devise/shared/error_messages", resource: resource
+
+    %div{:class => "field form-group my-2"}
+      = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control center", placeholder: "Email"
+
+    %div{:class => "field form-group my-2"}
+      = f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Password"
+
+    %div{:class => "field form-group my-2"}
+      = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm Password"
+
+    %div{:class => "actions text-center"}
+      = f.submit "Sign up", class:'btn btn-secondary my-4'
+
+  = render "devise/shared/links"

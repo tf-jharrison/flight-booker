@@ -3,6 +3,8 @@
 		= form_for @booking do |f|
 			%h2 Flight Details
 			= f.hidden_field :flight_id, value: @flight.id
+			= f.hidden_field :user_id, value: current_user.id
+			%h2=current_user.id
 			%table{:class => "table my-4"}
 				%thead
 					%tr

@@ -1,0 +1,31 @@
+%div{:class => "d-flex flex-column h-100 justify-content-center align-items-center"}
+  %div{:class=>"m-0 p-0 card w-75"}
+    %div{:class=>"card-body"}
+      %h5{:class=>"card-title m-3"}Edit Profile
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+
+        = render "devise/shared/error_messages", resource: resource
+      
+        %div{:class=>"field form-group my-4"}
+          = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control"
+      
+        - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+          %div
+            Currently waiting confirmation for: 
+            = resource.unconfirmed_email
+
+        %div{:class=>"field form-group my-4"}
+          = f.password_field :current_password, autocomplete: "current-password", placeholder: "Current Password", class: "form-control w-25"
+      
+        %div{:class=>"field form-group my-2"}
+          = f.password_field :password, autocomplete: "new-password", placeholder: "New Password", class: "form-control w-25"
+      
+        %div{:class=>"field form-group my-2"}
+          = f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm New Password", class: "form-control w-25"
+      
+        %div{:class=>"actions form-group my-2"}
+          = f.submit "Update", class:'btn btn-secondary my-4'
+      
+      %div{:class=>"d-flex justify-content-between"}
+        = button_to "Cancel my account", registration_path(resource_name), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: 'btn btn-danger'
+        = link_to "Back", :back , class: 'btn btn-primary'

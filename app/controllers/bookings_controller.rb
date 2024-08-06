@@ -2,7 +2,7 @@ class BookingsController < ApplicationController
 	before_action :require_login
 
 	def index
-		@bookings = Booking.where(user_id: current_user.id)
+		@bookings = Booking.where(user_id: current_user.id, status: nil)
 	end
 	
 	def new
@@ -34,6 +34,12 @@ class BookingsController < ApplicationController
 			flash[:error] = [ "Booking does not exist" ]
 			redirect_to root_path
 		end
+	end
+
+	def soft_delete
+		@booking = Booking.find(params[:id])
+		@booking.update(status: "soft_delete")
+		redirect_to bookings_path, notice: "Successfully Deleted"
 	end
 
 	private

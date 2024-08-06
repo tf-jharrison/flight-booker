@@ -19,8 +19,10 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
+# gems i have added
 gem "haml"
 gem 'devise', '~> 4.9', '>= 4.9.2'
+gem 'stripe'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

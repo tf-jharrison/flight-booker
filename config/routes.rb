@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
   resources :flights, only: [:index]
   root "flights#index"
-
+  get "purchase_success", to: 'stripe#purchase_success'
 
   # these were here as default
   get "up" => "rails/health#show", as: :rails_health_check

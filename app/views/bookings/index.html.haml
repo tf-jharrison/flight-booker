@@ -10,7 +10,7 @@
 					%th{:class => "text-center"} Departure Time
 					%th{:class => "text-center"} Flight Duration
 					%th{:class => "text-center"} Delete Booking
-					%th{:class => "text-center"} 
+					%th{:class => "text-center"} Status
 			%tbody
 				- @bookings.each do |booking|
 					%tr
@@ -19,5 +19,5 @@
 						%td{:class => "text-center"}= (booking.flight.start).strftime("%d/%m/%y")
 						%td{:class => "text-center"}= (booking.flight.start).strftime("%H:%m")
 						%td{:class => "text-center"}= time_conversion(booking.flight.flight_duration)
-						%td{:class => "text-center"}= button_to "DELETE", [:soft_delete, booking], method: :put, data: { turbo_confirm: "Are you sure?" }, class: 'btn btn-danger'
 						%td{:class => "text-center"}= link_to "MORE DETAILS", booking_path(id: booking.id)
+						%td{:class => "text-center"}= booking.status

@@ -23,6 +23,7 @@ gem "jbuilder"
 gem "haml"
 gem 'devise', '~> 4.9', '>= 4.9.2'
 gem 'stripe'
+gem 'dotenv-rails', groups: [:development, :test]
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

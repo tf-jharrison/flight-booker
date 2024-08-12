@@ -5,9 +5,12 @@ Rails.application.routes.draw do
     put :soft_delete, on: :member
   end
   resources :flights, only: [:index]
+  post '/webhook', to: 'stripe#webhook'
   root "flights#index"
   get "purchase_success", to: 'stripe#purchase_success'
-
+  get "cancel_purchase", to: 'stripe#cancel_purchase'
+  post "create-checkout-session", to: "stripe#create_checkout_session"
+  get "payment_confirmed", to: "bookings#payment_confirmed"
   # these were here as default
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

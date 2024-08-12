@@ -31,5 +31,12 @@
 						%th{:class => "text-center"}=  "Passenger #{i+1}"
 						%td{:class => "text-center"}=  passenger.name
 						%td{:class => "text-center"}=  passenger.email
+		%div{:class => 'd-flex justify-content-end gap-2'}
+			%div{'data-turbo' => 'false'}
+				= form_with url: :create_checkout_session do |f|
+					= f.hidden_field :booking_id, value: @booking.id
+					= f.submit "Buy", :class => "btn btn-success" 
+			%div
+				= button_to "CANCEL", [:soft_delete, @booking], method: :put, data: { turbo_confirm: "Are you sure?" }, class: 'btn btn-danger'
 
 	= button_to "Book Another Flight", root_path, method: :get
